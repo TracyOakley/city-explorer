@@ -3,6 +3,7 @@ import axios from "axios";
 import Badge from 'react-bootstrap/Badge';
 import './App.css';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 
 
 
@@ -12,7 +13,9 @@ class App extends React.Component{
     this.state = {
       city:'',
       cityData: {lat:0,lon:0},
-      isCity:false
+      isCity:false,
+      isError: false,
+      errorMessage: ''
     }
   }
 
@@ -36,7 +39,8 @@ handleSubmit= async (e) =>{
 
     this.setState({
       cityData: locationInfo.data[0],
-      isCity:true
+      isCity:true,
+      isError: false
      });
 
 
@@ -44,6 +48,11 @@ handleSubmit= async (e) =>{
 } catch (error){
   console.log('error: ', error)
   console.log('error.message: ', error.message);
+  this.setState({
+    errorMessage: error.message,
+    isError: true,
+    isCity:false
+  });
 }
 }
 
@@ -64,6 +73,7 @@ render(){
 
   let mapImage = this.state.isCity ? <img src={mapURL} className="rounded" alt={this.state.city}/> : <></>
 
+ 
   return(
     <>
         {/* Add a separate Header, Main and Footer components */}
@@ -77,6 +87,13 @@ render(){
           <Button variant="primary" type="submit">Explore!</Button>
         </form>
         <p>  </p>
+        {
+          this.state.isError
+            ?  <Alert key='danger' variant='danger'>
+            This is a Error alert— check it out! - {this.state.errorMessage}
+          </Alert>
+            : <></>
+        }
         {
         cityBadge
         }

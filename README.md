@@ -26,18 +26,25 @@ Start time: 2:30
 Finish time:4:00
 Actual time needed to complete: 1.5 hours
 
-
 Name of feature: Location - Latitude and Longitude
 Estimate of time needed to complete: 1 hour
 Start time: 4:00
-Finish time:
-Actual time needed to complete: 
+Finish time: 5:30
+Actual time needed to complete: 1.5 hours
 
-Name of feature: 
+Name of feature: Display a Map
 Estimate of time needed to complete: 1 hour
-Start time: 4:00
-Finish time:
-Actual time needed to complete: 
+Start time: 5:30
+Finish time: 6:15
+Actual time needed to complete: 45 mins
+
+Name of feature: Display an Error Message
+Estimate of time needed to complete: 1 hour
+Start time: 6:30
+Finish time: 7:00
+Actual time needed to complete: 30 mins
+
+
 
 <!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
 

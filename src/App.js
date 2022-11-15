@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import Badge from 'react-bootstrap/Badge';
+import './App.css';
+import Button from 'react-bootstrap/Button';
+
 
 
 class App extends React.Component{
@@ -57,6 +60,10 @@ render(){
   {this.state.city} <Badge bg="secondary">{`Latitude: ${this.state.cityData.lat}, Longitude: ${this.state.cityData.lon}`}</Badge>
   </h2> : <></>
 
+  let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}}&zoom=8`;
+
+  let mapImage = this.state.isCity ? <img src={mapURL} className="rounded" alt={this.state.city}/> : <></>
+
   return(
     <>
         {/* Add a separate Header, Main and Footer components */}
@@ -67,12 +74,15 @@ render(){
           <label>Search for a City
           <input type="text" name="city" onChange={this.handleInputChange}/>
           </label>
-          <button type="submit">Explore!</button>
+          <Button variant="primary" type="submit">Explore!</Button>
         </form>
         <p>  </p>
         {
         cityBadge
         }
+        <div className="text-center" id="Image">
+        {mapImage}
+        </div>
       </>
   );
 }

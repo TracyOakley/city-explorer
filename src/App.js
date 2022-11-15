@@ -1,6 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Badge from 'react-bootstrap/Badge';
+import './App.css';
+import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+
 
 
 class App extends React.Component{
@@ -9,7 +13,9 @@ class App extends React.Component{
     this.state = {
       city:'',
       cityData: {lat:0,lon:0},
-      isCity:false
+      isCity:false,
+      isError: false,
+      errorMessage: ''
     }
   }
 
@@ -33,7 +39,8 @@ handleSubmit= async (e) =>{
 
     this.setState({
       cityData: locationInfo.data[0],
-      isCity:true
+      isCity:true,
+      isError: false
      });
 
 
@@ -41,6 +48,11 @@ handleSubmit= async (e) =>{
 } catch (error){
   console.log('error: ', error)
   console.log('error.message: ', error.message);
+  this.setState({
+    errorMessage: error.message,
+    isError: true,
+    isCity:false
+  });
 }
 }
 
@@ -57,6 +69,11 @@ render(){
   {this.state.city} <Badge bg="secondary">{`Latitude: ${this.state.cityData.lat}, Longitude: ${this.state.cityData.lon}`}</Badge>
   </h2> : <></>
 
+  let mapURL = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}}&zoom=8`;
+
+  let mapImage = this.state.isCity ? <img src={mapURL} className="rounded" alt={this.state.city}/> : <></>
+
+ 
   return(
     <>
         {/* Add a separate Header, Main and Footer components */}
@@ -67,12 +84,22 @@ render(){
           <label>Search for a City
           <input type="text" name="city" onChange={this.handleInputChange}/>
           </label>
-          <button type="submit">Explore!</button>
+          <Button variant="primary" type="submit">Explore!</Button>
         </form>
         <p>  </p>
         {
+          this.state.isError
+            ?  <Alert key='danger' variant='danger'>
+            This is a Error alert— check it out! - {this.state.errorMessage}
+          </Alert>
+            : <></>
+        }
+        {
         cityBadge
         }
+        <div className="text-center" id="Image">
+        {mapImage}
+        </div>
       </>
   );
 }

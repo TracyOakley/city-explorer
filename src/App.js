@@ -4,6 +4,7 @@ import Badge from 'react-bootstrap/Badge';
 import './App.css';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
+import Weather from "./Components/Weather";
 
 
 
@@ -13,6 +14,8 @@ class App extends React.Component{
     this.state = {
       city:'',
       cityData: {lat:0,lon:0},
+      weatherData:[],
+      isWeather:false,
       isCity:false,
       isError: false,
       errorMessage: ''
@@ -43,6 +46,8 @@ handleSubmit= async (e) =>{
       isError: false
      });
 
+     this.handleWeatherRequest();
+
 
     //search for data about city
 } catch (error){
@@ -54,6 +59,33 @@ handleSubmit= async (e) =>{
     isCity:false
   });
 }
+}
+
+handleWeatherRequest = async () =>{
+  try{
+    let weatherInfo = await axios.get(`http://localhost:3001/weather?cityName=${this.state.city}`);
+  //proof of life
+  
+  console.log(weatherInfo.data);
+  
+  // console.log(e.target.city.value);
+    // // we can't put things in state and expect to use them right away, so this won't work:
+    this.setState({
+      weatherData: weatherInfo.data,
+      isError: false,
+      isWeather: true
+     });
+
+  } catch (error){
+    console.log('error: ', error)
+    console.log('error.message: ', error.message);
+    this.setState({
+    errorMessage: error.message,
+    isError: true,
+    isWeather:false
+  });
+
+  }
 }
 
 handleInputChange = e => {
@@ -100,6 +132,9 @@ render(){
         <div className="text-center" id="Image">
         {mapImage}
         </div>
+        {
+          this.state.isWeather ? <Weather cityName={this.state.city} weatherData={this.state.weatherData} /> : <></>
+        }
       </>
   );
 }

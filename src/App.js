@@ -5,6 +5,7 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Weather from "./Components/Weather";
+import Movie from "./Components/Movie";
 
 
 
@@ -15,10 +16,12 @@ class App extends React.Component{
       city:'',
       cityData: {lat:0,lon:0},
       weatherData:[],
+      movie:[],
       isWeather:false,
       isCity:false,
       isError: false,
-      errorMessage: ''
+      isMovie:false,
+      errorMessage: '' 
     }
   }
 
@@ -34,22 +37,27 @@ handleSubmit= async (e) =>{
 
 
   //proof of life
-  console.log(locationInfo.data[0]);
-  console.log(locationInfo.data[0].lat)
+  //console.log(locationInfo.data[0]);
+  //console.log(locationInfo.data[0].lat)
   
   // console.log(e.target.city.value);
     // // we can't put things in state and expect to use them right away, so this won't work:
 
-    this.setState({
+    this.setState ({
       cityData: locationInfo.data[0],
       isCity:true,
       isError: false
-     });
+     },
+     () => {if(this.state.isCity){
+      this.handleWeatherRequest();
+      this.handleMovieRequest();
+    }}
+     );
 
-     this.handleWeatherRequest();
+     
+     
 
-
-    //search for data about city
+    
 } catch (error){
   console.log('error: ', error)
   console.log('error.message: ', error.message);
@@ -63,10 +71,13 @@ handleSubmit= async (e) =>{
 
 handleWeatherRequest = async () =>{
   try{
-    let weatherInfo = await axios.get(`http://localhost:3001/weather?cityName=${this.state.city}`);
+
+    let weatherURL = `${process.env.REACT_APP_SERVER}/weather?cityName=${this.state.city}&lat=${this.state.cityData.lat}&lon=${this.state.cityData.lon}`;
+
+    let weatherInfo = await axios.get(weatherURL);
   //proof of life
-  
-  console.log(weatherInfo.data);
+  console.log(this.state.cityData);
+  //console.log(weatherInfo.data);
   
   // console.log(e.target.city.value);
     // // we can't put things in state and expect to use them right away, so this won't work:
@@ -82,7 +93,33 @@ handleWeatherRequest = async () =>{
     this.setState({
     errorMessage: error.message,
     isError: true,
-    isWeather:false
+    isWeather:false,
+    isMovie:false
+  });
+
+  }
+}
+
+handleMovieRequest = async () =>{
+  try{
+
+    let movieURL = `${process.env.REACT_APP_SERVER}/movie?cityName=${this.state.city}`;
+
+    let movieInfo = await axios.get(movieURL);
+  
+    this.setState({
+      movieData: movieInfo.data,
+      isError: false,
+      isMovie: true
+     });
+
+  } catch (error){
+    console.log('error: ', error)
+    console.log('error.message: ', error.message);
+    this.setState({
+    errorMessage: error.message,
+    isError: true,
+    isMovie:false
   });
 
   }
@@ -134,6 +171,9 @@ render(){
         </div>
         {
           this.state.isWeather ? <Weather cityName={this.state.city} weatherData={this.state.weatherData} /> : <></>
+        }
+        {
+          this.state.isMovie ? <Movie cityName={this.state.city} movieData={this.state.movieData} /> : <></>
         }
       </>
   );

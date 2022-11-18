@@ -7,8 +7,8 @@
 Name of feature: Componentize the front End code base
 Estimate of time needed to complete: 1 hour
 Start time: 4:30
-Finish time:
-Actual time needed to complete: 1.5 hours
+Finish time: 6:30
+Actual time needed to complete: 2 hours
 
 ![Lab 8 WRRC](./Images/Lab8WRRC.png)
 ![Lab 7 WRRC](./Images/Lab7WRRCFixed.png)

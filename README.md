@@ -1,10 +1,21 @@
 # City-Explorer
 
+![Lab 9 WRRC](./Images/Lab9WRRC.png)
 
+## Change Log
+
+Name of feature: Componentize the front End code base
+Estimate of time needed to complete: 1 hour
+Start time: 4:30
+Finish time:
+Actual time needed to complete: 1.5 hours
+
+![Lab 8 WRRC](./Images/Lab8WRRC.png)
+![Lab 7 WRRC](./Images/Lab7WRRCFixed.png)
 ![The Web Request Response Cycle for this site](/Images/WRRC.png)
 
 **Author**: Tracy Oakley
-**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+**Version**: 1.3.0 (increment the patch/fix version number if you make more commits past your first submission)
 
 ## Overview
 

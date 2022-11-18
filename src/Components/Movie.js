@@ -1,27 +1,35 @@
 import React from "react";
-import Badge from 'react-bootstrap/Badge';
+//import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 
-class Movie extends React.Component {
+class Movie extends React.Component{
 
   render(){
 
-    let movies = [];
+    let shortData = this.props.movieData;
+    
+    let movieURL = `https://image.tmdb.org/t/p/w500/${shortData.image_url}`
 
-    this.props.movieData.forEach((e,idx) => {
-      movies.push(
-      <h3 key={idx} >{e.title} rated <Badge bg="secondary">{`${e.vote_average}`}</Badge></h3>);
-    });
+    
 
     return(
-      <>
-      <h2 className='text-center'>{`Movies for ${this.props.cityName}:`}</h2>
-      <ul>
-        {movies}
-      </ul>
-      </>
+    <Col>
+      <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" alt="Movie Poster" src={movieURL} />
+      <Card.Body>
+        <Card.Title>{shortData.title}</Card.Title>
+        <Card.Text>
+          {shortData.description}
+        </Card.Text>
+        <p>❤️ {shortData.vote_average}</p>
+      </Card.Body>
+      </Card>
+    </Col>
+      
+
     );
   }
-
 }
 
 export default Movie;

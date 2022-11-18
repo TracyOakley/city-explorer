@@ -5,8 +5,7 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Weather from "./Components/Weather";
-import Movie from "./Components/Movie";
-
+import Movie from "./Components/Movies";
 
 
 class App extends React.Component{

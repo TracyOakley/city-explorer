@@ -8,8 +8,16 @@ class Movie extends React.Component{
   render(){
 
     let shortData = this.props.movieData;
+
+    let movieURL = '';
+
+    if(shortData.image_url === null){
+      movieURL = 'https://via.placeholder.com/500';
+    }else{
+      movieURL = `https://image.tmdb.org/t/p/w500/${shortData.image_url}`
+    }
     
-    let movieURL = `https://image.tmdb.org/t/p/w500/${shortData.image_url}`
+    
 
     
 

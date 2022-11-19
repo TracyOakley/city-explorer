@@ -71,7 +71,7 @@ handleSubmit= async (e) =>{
 handleWeatherRequest = async () =>{
   try{
 
-    let weatherURL = `${process.env.REACT_APP_SERVER}/weather?cityName=${this.state.city}&lat=${this.state.cityData.lat}&lon=${this.state.cityData.lon}`;
+    let weatherURL = `${process.env.REACT_APP_SERVER}/weather?&lat=${this.state.cityData.lat}&lon=${this.state.cityData.lon}`;
 
     let weatherInfo = await axios.get(weatherURL);
   //proof of life
